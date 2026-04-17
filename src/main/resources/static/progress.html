@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Analytics | Fitness Guider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: white; min-height: 100vh; line-height: 1.6; }
+
+        nav { background: #1e293b; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: 700; font-size: 22px; color: #ff4d4d; text-decoration: none; letter-spacing: 1px; }
+        .back-btn { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; text-decoration: none; padding: 10px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; border: 1px solid rgba(255, 77, 77, 0.2); transition: 0.3s; }
+        .back-btn:hover { background: #ff4d4d; color: white; transform: translateY(-2px); }
+
+        .container { max-width: 1300px; margin: 40px auto; padding: 0 25px; }
+        .header-box { margin-bottom: 40px; }
+        .header-box h1 { font-size: 36px; font-weight: 700; }
+        .header-box p { color: #94a3b8; font-size: 16px; }
+
+        .grid-layout { display: grid; grid-template-columns: 1fr 350px; gap: 30px; align-items: start; }
+        .card { background: #1e293b; padding: 30px; border-radius: 24px; border: 1px solid #334155; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+        h3 { font-size: 18px; font-weight: 600; margin-bottom: 25px; border-left: 5px solid #ff4d4d; padding-left: 15px; color: #f8fafc; }
+        .diet-h3 { border-left-color: #10b981; }
+
+        .stat-group { display: flex; flex-direction: column; gap: 20px; }
+        .stat-box { background: #0f172a; padding: 25px; border-radius: 18px; text-align: center; border: 1px solid #334155; transition: 0.3s; }
+        .stat-box:hover { border-color: #ff4d4d33; transform: scale(1.02); }
+        .stat-box small { color: #94a3b8; font-size: 12px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; display: block; margin-bottom: 8px; }
+        .stat-box p { font-size: 26px; font-weight: 800; color: #ff4d4d; }
+        .diet-stat p { color: #10b981; }
+
+        .table-container { overflow-x: auto; }
+        .history-table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        .history-table th { text-align: left; color: #94a3b8; padding: 15px; border-bottom: 2px solid #334155; font-size: 13px; font-weight: 600; }
+        .history-table td { padding: 15px; border-bottom: 1px solid #2d3a4f; color: #cbd5e1; font-size: 14px; }
+
+        #emptyState { text-align: center; padding: 80px 20px; }
+
+        @media (max-width: 1024px) {
+            .grid-layout { grid-template-columns: 1fr; }
+            .header-box h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="dashboard.html" class="logo">FITNESS GUIDER</a>
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+</nav>
+
+<div class="container">
+    <div class="header-box">
+        <h1>Analytics Dashboard 📈</h1>
+        <p>Your comprehensive fitness and nutrition tracking overview.</p>
+    </div>
+
+    <div id="mainContent" class="grid-layout" style="display: none;">
+        <div class="main-column">
+            <div class="card">
+                <h3>Activity Comparison (Last 7 Logs)</h3>
+                <div style="height: 350px;">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Recent Workout Sessions</h3>
+                <div class="table-container">
+                    <table class="history-table">
+                        <thead><tr><th>Date</th><th>Activity</th><th>Duration</th><th>Energy Burned</th></tr></thead>
+                        <tbody id="workoutList"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="diet-h3">Dietary Intake Logs</h3>
+                <div class="table-container">
+                    <table class="history-table">
+                        <thead><tr><th>Date</th><th>Plan</th><th>Target Day</th><th>Calories</th></tr></thead>
+                        <tbody id="dietList"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <aside class="sidebar">
+            <div class="card">
+                <h3>Workout Summary</h3>
+                <div class="stat-group">
+                    <div class="stat-box"><small>Sessions Completed</small><p id="countW">0</p></div>
+                    <div class="stat-box"><small>Total Calories Burned</small><p id="kcalW">0</p></div>
+                    <div class="stat-box"><small>Total Active Time</small><p id="timeW">0 min</p></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="diet-h3">Diet Summary</h3>
+                <div class="stat-group">
+                    <div class="stat-box diet-stat"><small>Days Logged</small><p id="countD">0</p></div>
+                    <div class="stat-box diet-stat"><small>Daily Average</small><p id="avgD">0</p></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div id="emptyState" class="card" style="display: none;">
+        <h2>No Data Recorded Yet 🏃‍♂️</h2>
+        <p>Your progress will appear here once you log your first activity or diet plan.</p>
+        <br>
+        <a href="dashboard.html" class="back-btn" style="display: inline-block;">Get Started</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/api/my-progress')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    document.getElementById('mainContent').style.display = 'grid';
+                    processData(data);
+                } else {
+                    document.getElementById('emptyState').style.display = 'block';
+                }
+            })
+            .catch(() => document.getElementById('emptyState').style.display = 'block');
+    });
+
+    function processData(logs) {
+        const wTable = document.getElementById('workoutList');
+        const dTable = document.getElementById('dietList');
+
+        let stats = { wCount: 0, wKcal: 0, wTime: 0, dCount: 0, dKcal: 0 };
+        const chartData = { labels: [], workout: [], diet: [] };
+
+        logs.forEach(log => {
+            const date = new Date(log.log_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+
+            if (log.category === 'workout') {
+                stats.wCount++;
+                stats.wKcal += (log.kcal || 0);
+                stats.wTime += (log.duration_min || 0);
+                wTable.innerHTML += `<tr><td>${date}</td><td>${log.type}</td><td>${log.duration_min} min</td><td style="color:#ff4d4d; font-weight:600;">${log.kcal} kcal</td></tr>`;
+            } else {
+                stats.dCount++;
+                stats.dKcal += (log.kcal || 0);
+                dTable.innerHTML += `<tr><td>${date}</td><td>${log.type}</td><td>${log.day}</td><td style="color:#10b981; font-weight:600;">${log.kcal} kcal</td></tr>`;
+            }
+        });
+
+        const recent = [...logs].reverse().slice(-7);
+        recent.forEach(log => {
+            chartData.labels.push(new Date(log.log_date).toLocaleDateString([], { weekday: 'short' }));
+            if (log.category === 'workout') {
+                chartData.workout.push(log.kcal);
+                chartData.diet.push(0);
+            } else {
+                chartData.diet.push(log.kcal);
+                chartData.workout.push(0);
+            }
+        });
+
+        document.getElementById('countW').innerText = stats.wCount;
+        document.getElementById('kcalW').innerText = stats.wKcal + " kcal";
+        document.getElementById('timeW').innerText = stats.wTime + " min";
+        document.getElementById('countD').innerText = stats.dCount;
+        document.getElementById('avgD').innerText = stats.dCount > 0 ? Math.round(stats.dKcal / stats.dCount) + " kcal" : "0 kcal";
+
+        initChart(chartData);
+    }
+
+    function initChart(data) {
+        const ctx = document.getElementById('activityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [
+                    { label: 'Burned', data: data.workout, backgroundColor: '#ff4d4d', borderRadius: 8 },
+                    { label: 'Consumed', data: data.diet, backgroundColor: '#10b981', borderRadius: 8 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { family: 'Poppins' } } } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

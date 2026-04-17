@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Guider - Transform Your Life</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        header{
+            position:fixed;
+            width:100%;
+            top:0;
+            display:flex;
+            justify-content:space-between;
+            align-items: center;
+            padding:15px 8%;
+            background:rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index:1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff4d4d;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+        }
+
+        header nav a{
+            color:#cbd5e1;
+            margin-left:25px;
+            text-decoration:none;
+            font-size: 14px;
+            font-weight: 500;
+            transition:0.3s;
+        }
+
+        header nav a:hover{
+            color:#ff4d4d;
+        }
+
+        .admin-link {
+            border: 1px solid #ff4d4d;
+            padding: 6px 15px;
+            border-radius: 8px;
+            color: #ff4d4d !important;
+        }
+
+        .admin-link:hover {
+            background: #ff4d4d;
+            color: white !important;
+        }
+
+        .register-link {
+            background: #ff4d4d;
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+        }
+
+        .hero{
+            height:100vh;
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.2)),
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070');
+            background-size:cover;
+            background-position: center;
+            display:flex;
+            align-items:center;
+            padding: 0 8%;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1{
+            font-size:65px;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #ff4d4d;
+            background: linear-gradient(to right, #ff4d4d, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p{
+            margin-bottom: 30px;
+            font-size:18px;
+            color: #94a3b8;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            padding:15px 35px;
+            background:#ff4d4d;
+            border:none;
+            color:white;
+            border-radius:10px;
+            font-weight: 600;
+            cursor:pointer;
+            transition:0.3s;
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            padding:15px 35px;
+            background: transparent;
+            border: 1px solid #334155;
+            color:white;
+            border-radius:10px;
+            font-weight: 600;
+            cursor:pointer;
+            transition:0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover{ background:#e60000; transform:translateY(-3px); }
+        .btn-secondary:hover{ background: rgba(255,255,255,0.05); transform:translateY(-3px); }
+
+        .info{
+            padding:100px 8%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .info-text h2{
+            font-size:40px;
+            margin-bottom:20px;
+        }
+
+        .info-text p{
+            color:#94a3b8;
+            margin-bottom:30px;
+        }
+
+        .points{
+            display: grid;
+            gap: 15px;
+        }
+
+        .point-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #1e293b;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
+
+        .point-item span { color: #ff4d4d; font-weight: bold; }
+
+        .features{
+            padding:100px 8%;
+            background:#0b1120;
+            text-align:center;
+        }
+
+        .features h2 { font-size: 36px; margin-bottom: 50px; }
+
+        .cards{
+            display:grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap:30px;
+        }
+
+        .card{
+            background:#1e293b;
+            border-radius:20px;
+            padding: 20px;
+            text-align: left;
+            border: 1px solid #334155;
+            transition:0.4s;
+        }
+
+        .card:hover{
+            transform:translateY(-10px);
+            border-color: #ff4d4d;
+        }
+
+        .card img{
+            width:100%;
+            height:220px;
+            border-radius: 15px;
+            object-fit:cover;
+            margin-bottom: 20px;
+        }
+
+        .card h3{ margin-bottom: 10px; color: #f8fafc; }
+        .card p{ color: #94a3b8; font-size: 14px; line-height: 1.6; }
+
+        footer{
+            background:#0b1120;
+            color:#64748b;
+            text-align:center;
+            padding:40px;
+            border-top: 1px solid #1e293b;
+        }
+
+        @media (max-width: 900px) {
+            .info { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 45px; }
+            header nav { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">FITNESS GUIDER</div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="login.html">Login</a>
+        <a href="admin-login.html" class="admin-link">Admin Login</a>
+        <a href="register.html" class="register-link">Get Started</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Push Your Limits <br><span class="highlight">Beyond Boundaries</span></h1>
+        <p>Expert-led workout routines, personalized nutrition plans, and real-time health tracking to help you achieve the body of your dreams.</p>
+        <div class="hero-btns">
+            <a href="register.html" class="btn-primary">Start Your Journey</a>
+            <a href="login.html" class="btn-secondary">Login Account</a>
+        </div>
+    </div>
+</section>
+
+<section class="info">
+    <div class="info-text">
+        <h2>Why Choose <span class="highlight">Our Guide?</span></h2>
+        <p>We provide a scientific approach to fitness. Whether you're a beginner or an athlete, our tools are designed to adapt to your progress.</p>
+        <div class="points">
+            <div class="point-item"><span>✓</span> Smart Workout Architecture</div>
+            <div class="point-item"><span>✓</span> Precision Nutrition Guidance</div>
+            <div class="point-item"><span>✓</span> Instant BMI Health Analytics</div>
+        </div>
+    </div>
+    <div class="info-img">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070" style="width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+    </div>
+</section>
+
+<section class="features">
+    <h2>Premium Services</h2>
+    <div class="cards">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?q=80&w=2069">
+            <h3>Advanced Workouts</h3>
+            <p>Targeted exercises for fat loss, muscle gain, and endurance training.</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2070">
+            <h3>Nutrition Hub</h3>
+            <p>Personalized diet charts that calculate your macros based on your goal.</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=2070">
+            <h3>Health Monitor</h3>
+            <p>Track your BMI and body composition progress with detailed reports.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Fitness Guider | Built with ❤️ by Shubham</p>
+</footer>
+
+</body>
+</html>```

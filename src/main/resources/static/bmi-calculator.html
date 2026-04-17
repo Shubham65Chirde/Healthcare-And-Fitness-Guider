@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - Fitness Guider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            background: #1e293b;
+            padding: 15px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 22px;
+            color: #ff4d4d;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover { color: #ff4d4d; }
+
+        .container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .bmi-card {
+            background: #1e293b;
+            width: 100%;
+            max-width: 550px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid #334155;
+            text-align: center;
+        }
+
+        h1 { margin-bottom: 30px; font-size: 28px; }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .input-group input:focus { border-color: #ff4d4d; }
+
+        .calc-btn {
+            width: 100%;
+            padding: 15px;
+            background: #ff4d4d;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .calc-btn:hover { background: #e60000; transform: translateY(-2px); }
+
+        .result-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bmi-value {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .bmi-status {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .suggestion-box {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #ff4d4d;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .suggestion-box h4 {
+            color: #ff4d4d;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .suggestion-box p {
+            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .status-bar {
+            height: 12px;
+            background: #334155;
+            border-radius: 6px;
+            margin: 25px 0;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .bar { height: 100%; }
+        .u-bar { width: 18.5%; background: #34d399; }
+        .n-bar { width: 6.5%; background: #10b981; }
+        .o-bar { width: 5%; background: #fbbf24; }
+        .ob-bar { width: 70%; background: #ef4444; }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="dashboard.html" class="logo">FITNESS GUIDER</a>
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+</nav>
+
+<div class="container">
+    <div class="bmi-card">
+        <h1>BMI Calculator ⚖️</h1>
+
+        <div class="input-grid">
+            <div class="input-group">
+                <label>Weight (kg)</label>
+                <input type="number" id="weight" placeholder="Ex: 70">
+            </div>
+            <div class="input-group">
+                <label>Height (cm)</label>
+                <input type="number" id="height" placeholder="Ex: 175">
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="calculateBMI()">Analyze My Health →</button>
+
+        <div class="result-section" id="resultSection">
+            <div class="bmi-value" id="bmiValue">--</div>
+            <div class="bmi-status" id="bmiStatus">--</div>
+
+            <div class="status-bar">
+                <div class="bar u-bar"></div>
+                <div class="bar n-bar"></div>
+                <div class="bar o-bar"></div>
+                <div class="bar ob-bar"></div>
+            </div>
+
+            <div class="suggestion-box">
+                <h4 id="planTitle">🎯 Recommended Action Plan:</h4>
+                <p id="bmiMsg"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculateBMI() {
+        const weight = document.getElementById('weight').value;
+        const height = document.getElementById('height').value;
+
+        if (weight > 0 && height > 0) {
+            const heightInMeters = height / 100;
+            const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('bmiValue').innerText = bmi;
+
+            let status = "";
+            let color = "";
+            let msg = "";
+            let title = "";
+
+            if (bmi < 18.5) {
+                status = "Underweight 🦴";
+                color = "#34d399";
+                title = "🎯 Goal: Healthy Weight Gain";
+                msg = "Your weight is below the healthy range. Focus on increasing protein intake and healthy fats. We recommend strength training and eating 5-6 smaller, nutrient-dense meals throughout the day.";
+            } else if (bmi >= 18.5 && bmi <= 24.9) {
+                status = "Normal Weight ✅";
+                color = "#10b981";
+                title = "🎯 Goal: Stay Fit & Maintain";
+                msg = "Congratulations! You are in excellent shape. To maintain this, keep following a balanced diet and stay consistent with at least 30 minutes of physical activity daily.";
+            } else if (bmi >= 25 && bmi <= 29.9) {
+                status = "Overweight ⚠️";
+                color = "#fbbf24";
+                title = "🎯 Goal: Weight Loss";
+                msg = "You are slightly above the healthy weight range. Reduce intake of processed sugars and junk food. Incorporate cardio exercises like running or swimming and maintain a calorie deficit.";
+            } else {
+                status = "Obese 🚨";
+                color = "#ef4444";
+                title = "🎯 Goal: Urgent Weight Loss";
+                msg = "Your weight may pose health risks. It is crucial to limit fast food and sugary drinks immediately. Start High-Intensity Interval Training (HIIT) and consider consulting a fitness expert.";
+            }
+
+            const statusElement = document.getElementById('bmiStatus');
+            statusElement.innerText = status;
+            statusElement.style.color = color;
+            document.getElementById('bmiValue').style.color = color;
+            document.getElementById('planTitle').innerText = title;
+            document.getElementById('bmiMsg').innerText = msg;
+
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        } else {
+            alert("Please enter valid weight and height!");
+        }
+    }
+</script>
+</body>
+</html>

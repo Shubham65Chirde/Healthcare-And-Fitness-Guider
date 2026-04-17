@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Maintenance Diet Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: white; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        nav { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .back-dash { background: #3b82f6; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; transition: 0.3s; }
+        .back-dash:hover { background: #2563eb; }
+        header { text-align: center; padding: 20px 0 40px; }
+        h1 { color: #8b5cf6; font-size: 2.5rem; margin-bottom: 10px; }
+        .diet-table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 15px; overflow: hidden; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        th, td { padding: 20px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #8b5cf6; color: white; text-transform: uppercase; font-size: 13px; }
+        tr:hover { background: #2d3a4f; transition: 0.3s; }
+        .done-btn { background: #8b5cf6; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; width: 100%; }
+        .done-btn:hover { background: #7c3aed; transform: scale(1.02); }
+        .done-btn.completed { background: #64748b; cursor: not-allowed; opacity: 0.7; }
+        @media (max-width: 900px) {
+            .diet-table, thead, tbody, th, td, tr { display: block; }
+            th { display: none; }
+            tr { margin-bottom: 20px; border: 1px solid #334155; border-radius: 10px; }
+            td { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
+            td::before { content: attr(data-label); font-weight: bold; color: #8b5cf6; margin-right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav>
+        <a href="dashboard.html" class="back-dash">Back to Dashboard</a>
+    </nav>
+
+    <header>
+        <h1>Stay Fit Diet Plan</h1>
+        <p>Balanced nutrition to maintain energy and muscle tone</p>
+    </header>
+
+    <table class="diet-table">
+        <thead>
+        <tr>
+            <th>Day</th>
+            <th>Breakfast</th>
+            <th>Snack</th>
+            <th>Lunch</th>
+            <th>Evening</th>
+            <th>Dinner</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="diet-body">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const dietData = [
+        { day: "Monday", bf: "Vegetable Omelet with Whole Grain Toast", snack: "Greek Yogurt", lunch: "Grilled Chicken with Quinoa & Greens", eve: "Mixed Berries", dinner: "Baked Salmon with Asparagus", kcal: 2100 },
+        { day: "Tuesday", bf: "Peanut Butter & Banana Smoothie Bowl", snack: "Handful of Walnuts", lunch: "Turkey Wrap with Avocado & Sprouts", eve: "Apple slices", dinner: "Lean Beef Stir-fry with Broccoli", kcal: 2050 },
+        { day: "Wednesday", bf: "Overnight Oats with Chia Seeds", snack: "Cottage Cheese", lunch: "Mixed Bean Salad with Feta", eve: "Roasted Almonds", dinner: "Grilled Tofu and Brown Rice", kcal: 2150 },
+        { day: "Thursday", bf: "Poached Eggs on Smashed Avocado", snack: "Hummus and Carrots", lunch: "Lentil Soup with Whole Wheat Bread", eve: "Banana", dinner: "Chicken Pasta with Pesto & Veggies", kcal: 2000 },
+        { day: "Friday", bf: "Scrambled Tofu with Spinach", snack: "Protein Bar", lunch: "Tuna Salad with Olive Oil Dressing", eve: "Pear", dinner: "Grilled Shrimp with Sweet Potato", kcal: 2100 },
+        { day: "Saturday", bf: "Whole Wheat Pancakes with Honey", snack: "Pumpkin Seeds", lunch: "Chicken Burrito Bowl (No Cream)", eve: "Yogurt Smoothie", dinner: "Baked White Fish with Roasted Roots", kcal: 2200 },
+        { day: "Sunday", bf: "Greek Yogurt with Granola & Nuts", snack: "Dark Chocolate (Small piece)", lunch: "Paneer Tikka with Whole Wheat Roti", eve: "Roasted Makhana", dinner: "Vegetable Frittata with Side Salad", kcal: 1950 }
+    ];
+
+    const tableBody = document.getElementById('diet-body');
+
+    dietData.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td data-label="Day"><strong>${item.day}</strong></td>
+            <td data-label="Breakfast">${item.bf}</td>
+            <td data-label="Snack">${item.snack}</td>
+            <td data-label="Lunch">${item.lunch}</td>
+            <td data-label="Evening">${item.eve}</td>
+            <td data-label="Dinner">${item.dinner}</td>
+            <td data-label="Action">
+                <button class="done-btn" onclick="saveMealProgress(this, '${item.day}', ${item.kcal})">Done</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    function saveMealProgress(btn, day, kcal) {
+        const planType = "Maintenance (Fit)";
+
+        const payload = {
+            plan_type: planType,
+            day: day,
+            calories: kcal,
+            status: "Completed"
+        };
+
+        fetch('/api/save-diet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === "success") {
+                alert("Data Stored Successfully!");
+                window.location.href = "custom-diet.html";
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(err => {
+            alert("Redirecting to Diet Menu...");
+            window.location.href = "custom-diet.html";
+        });
+    }
+</script>
+
+</body>
+</html>

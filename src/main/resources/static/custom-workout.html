@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Goal - Fitness Guider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: white; min-height: 100vh; }
+        nav { background: #1e293b; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff4d4d; }
+        .back-btn { color: white; text-decoration: none; font-size: 14px; background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 5px; }
+
+        .header-section { text-align: center; padding: 60px 20px; background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48'); background-size: cover; background-position: center; }
+
+        .selection-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+
+        .goal-card { background: #1e293b; border-radius: 20px; padding: 40px 20px; text-align: center; border: 1px solid #334155; transition: 0.4s; cursor: pointer; }
+        .goal-card:hover { transform: translateY(-10px); border-color: #ff4d4d; background: #1e293b; box-shadow: 0 10px 30px rgba(255,77,77,0.2); }
+        .goal-card h2 { font-size: 24px; margin-bottom: 15px; color: #ff4d4d; }
+        .goal-card p { color: #94a3b8; margin-bottom: 25px; font-size: 14px; }
+        .select-btn { background: #ff4d4d; color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+
+        .lock-notice { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div style="font-weight: 700; color: #ff4d4d; font-size: 20px;">FITNESS GUIDER</div>
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+</nav>
+
+<section class="header-section">
+    <h1>Choose Your Workout Goal</h1>
+    <p>Only today's workout will be unlocked.</p>
+</section>
+
+<div class="selection-container">
+    <div class="goal-card" onclick="redirectByDay('gain')">
+        <div style="font-size: 50px; margin-bottom: 15px;">💪</div>
+        <h2>Weight Gain</h2>
+        <p>Focus on muscle building and strength training.</p>
+        <button class="select-btn">Start Gain Plan</button>
+    </div>
+
+    <div class="goal-card" onclick="redirectByDay('loss')">
+        <div style="font-size: 50px; margin-bottom: 15px;">🔥</div>
+        <h2>Weight Loss</h2>
+        <p>High intensity cardio and fat burning routines.</p>
+        <button class="select-btn">Start Loss Plan</button>
+    </div>
+
+    <div class="goal-card" onclick="redirectByDay('stayfit')">
+        <div style="font-size: 50px; margin-bottom: 15px;">🧘‍♂️</div>
+        <h2>Stay Fit</h2>
+        <p>Balanced workouts for health and flexibility.</p>
+        <button class="select-btn">Start Fitness Plan</button>
+    </div>
+</div>
+
+<p class="lock-notice">⚠️ Note: Workouts for other days are currently locked to maintain discipline.</p>
+
+<script>
+    function redirectByDay(goalType) {
+        const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+        const today = days[new Date().getDay()];
+
+        if (today === 'sun') {
+            alert("It's Sunday! Go for a walk or rest. Workouts resume on Monday! 😴");
+            return;
+        }
+
+        // Example: mon-gain.html, tue-loss.html, wed-stayfit.html
+        const targetURL = today + '-' + goalType + '.html';
+        window.location.href = targetURL;
+    }
+</script>
+
+</body>
+</html>

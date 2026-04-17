@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Weight Loss Diet Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: white; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        nav { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .back-dash { background: #3b82f6; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; transition: 0.3s; }
+        .back-dash:hover { background: #2563eb; }
+        header { text-align: center; padding: 20px 0 40px; }
+        h1 { color: #f43f5e; font-size: 2.5rem; margin-bottom: 10px; }
+        .diet-table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 15px; overflow: hidden; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        th, td { padding: 20px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #f43f5e; color: white; text-transform: uppercase; font-size: 13px; }
+        tr:hover { background: #2d3a4f; transition: 0.3s; }
+        .done-btn { background: #f43f5e; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; width: 100%; }
+        .done-btn:hover { background: #e11d48; transform: scale(1.02); }
+        .done-btn.completed { background: #64748b; cursor: not-allowed; opacity: 0.7; }
+        @media (max-width: 900px) {
+            .diet-table, thead, tbody, th, td, tr { display: block; }
+            th { display: none; }
+            tr { margin-bottom: 20px; border: 1px solid #334155; border-radius: 10px; }
+            td { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
+            td::before { content: attr(data-label); font-weight: bold; color: #f43f5e; margin-right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav>
+        <a href="dashboard.html" class="back-dash">Back to Dashboard</a>
+    </nav>
+
+    <header>
+        <h1>Weight Loss Diet Plan</h1>
+        <p>Calorie-controlled nutrient-dense meals for fat loss</p>
+    </header>
+
+    <table class="diet-table">
+        <thead>
+        <tr>
+            <th>Day</th>
+            <th>Breakfast</th>
+            <th>Snack</th>
+            <th>Lunch</th>
+            <th>Evening</th>
+            <th>Dinner</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="diet-body">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const dietData = [
+        { day: "Monday", bf: "Boiled Eggs (2) & Green Tea", snack: "Apple", lunch: "Grilled Chicken & Mixed Salad", eve: "Roasted Chana", dinner: "Clear Vegetable Soup & Moong Dal", kcal: 1400 },
+        { day: "Tuesday", bf: "Vegetable Oats Upma", snack: "Papaya Bowl", lunch: "Brown Rice, Dal & Sautéed Spinach", eve: "Green Coffee & Walnuts", dinner: "Grilled Paneer & Broccoli", kcal: 1350 },
+        { day: "Wednesday", bf: "Sprouted Salad with Lemon", snack: "Buttermilk", lunch: "Tofu Stir-fry with Peppers", eve: "Handful of Makhana", dinner: "Baked Fish or Chickpea Salad", kcal: 1450 },
+        { day: "Thursday", bf: "Moong Dal Chilla & Curd", snack: "Pear", lunch: "Multigrain Roti with Mixed Veggies", eve: "Green Tea & Almonds", dinner: "Boiled Soy chunks & Cucumber", kcal: 1300 },
+        { day: "Friday", bf: "Greek Yogurt with Berries", snack: "Orange", lunch: "Quinoa Salad with Lemon Vinaigrette", eve: "Coconut Water", dinner: "Steamed Chicken with Herbs", kcal: 1400 },
+        { day: "Saturday", bf: "Poha with Lots of Vegetables", snack: "Guava", lunch: "Lentil Soup & Small portion Salad", eve: "Sprouts Bhel", dinner: "Mushroom Clear Soup", kcal: 1380 },
+        { day: "Sunday", bf: "Millet Porridge", snack: "Handful of Seeds", lunch: "Boiled Chicken or Paneer Bhurji", eve: "Black Coffee", dinner: "Stir-fried Exotic Vegetables", kcal: 1250 }
+    ];
+
+    const tableBody = document.getElementById('diet-body');
+
+    dietData.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td data-label="Day"><strong>${item.day}</strong></td>
+            <td data-label="Breakfast">${item.bf}</td>
+            <td data-label="Snack">${item.snack}</td>
+            <td data-label="Lunch">${item.lunch}</td>
+            <td data-label="Evening">${item.eve}</td>
+            <td data-label="Dinner">${item.dinner}</td>
+            <td data-label="Action">
+                <button class="done-btn" onclick="saveMealProgress(this, '${item.day}', ${item.kcal})">Done</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    function saveMealProgress(btn, day, kcal) {
+        const planType = "Weight Loss";
+
+        const payload = {
+            plan_type: planType,
+            day: day,
+            calories: kcal,
+            status: "Completed"
+        };
+
+        fetch('/api/save-diet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === "success") {
+                alert("Data Stored Successfully!");
+                window.location.href = "custom-diet.html";
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(err => {
+            alert("Redirecting to Diet Menu...");
+            window.location.href = "custom-diet.html";
+        });
+    }
+</script>
+
+</body>
+</html>

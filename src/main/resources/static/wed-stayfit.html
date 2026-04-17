@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wednesday - Lower Body | Fitness Guider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: white; min-height: 100vh; }
+
+        nav {
+            background: #1e293b;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ff4d4d;
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .logo { font-weight: 700; font-size: 22px; color: #ff4d4d; }
+        .back-btn { color: white; text-decoration: none; font-size: 14px; background: rgba(255,77,77,0.2); padding: 8px 15px; border-radius: 8px; border: 1px solid #ff4d4d; transition: 0.3s; }
+        .back-btn:hover { background: #ff4d4d; }
+
+        .header-section {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1541534741688-6078c6bd35e5?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .day-selector {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            background: #1e293b;
+            overflow-x: auto;
+            border-bottom: 1px solid #334155;
+        }
+
+        .day-link {
+            text-decoration: none;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .day-link.active {
+            background: #ff4d4d;
+            color: white;
+            border-color: #ff4d4d;
+            box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
+        }
+
+        .workout-list {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px 20px;
+        }
+
+        .exercise-card {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            border: 1px solid #334155;
+            transition: 0.3s;
+        }
+
+        .exercise-card:hover { border-color: #ff4d4d; transform: translateY(-5px); }
+
+        .exercise-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 15px;
+            object-fit: cover;
+            background: #2d3748;
+            border: 2px solid #334155;
+        }
+
+        .exercise-info h3 { font-size: 22px; color: #ff4d4d; margin-bottom: 10px; }
+        .stats-badge {
+            display: inline-block;
+            background: rgba(255, 77, 77, 0.1);
+            padding: 6px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #ff4d4d;
+            font-weight: 600;
+            border: 1px solid rgba(255, 77, 77, 0.2);
+        }
+
+        .session-footer {
+            max-width: 850px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .done-btn {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .done-btn:hover {
+            background: #16a34a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        }
+
+        @media (max-width: 700px) {
+            .exercise-card { flex-direction: column; text-align: center; }
+            .exercise-img { width: 100%; height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">FITNESS GUIDER</div>
+    <a href="dashboard.html" class="back-btn">← Back</a>
+</nav>
+
+<section class="header-section">
+    <h1 style="font-size: 32px; margin-bottom: 10px;">Wednesday: Lower Body Power</h1>
+    <p style="color: #94a3b8;">Building strong legs and a solid foundation.</p>
+</section>
+
+<div class="day-selector">
+    <a href="mon-stayfit.html" class="day-link">Mon</a>
+    <a href="tue-stayfit.html" class="day-link">Tue</a>
+    <a href="wed-stayfit.html" class="day-link active">Wed</a>
+    <a href="thu-stayfit.html" class="day-link">Thu</a>
+    <a href="fri-stayfit.html" class="day-link">Fri</a>
+    <a href="sat-stayfit.html" class="day-link">Sat</a>
+</div>
+
+<div class="workout-list" id="workoutSession" data-type="Lower Body" data-duration="50" data-kcal="350">
+
+    <div class="exercise-card">
+        <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&q=80&w=400" class="exercise-img" alt="Squats">
+        <div class="exercise-info">
+            <h3>1. Standard Bodyweight Squats</h3>
+            <div class="stats-badge">4 Sets x 20 Reps</div>
+        </div>
+    </div>
+
+    <div class="exercise-card">
+        <img src="https://images.unsplash.com/photo-1434682881908-b43d0467b798?auto=format&fit=crop&q=80&w=400" class="exercise-img" alt="Lunges">
+        <div class="exercise-info">
+            <h3>2. Forward Lunges</h3>
+            <div class="stats-badge">3 Sets x 12 Reps Per Leg</div>
+        </div>
+    </div>
+
+    <div class="exercise-card">
+        <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&q=80&w=400" class="exercise-img" alt="Wall Sit">
+        <div class="exercise-info">
+            <h3>3. Wall Sit Hold</h3>
+            <div class="stats-badge">3 Sets x 45 Seconds</div>
+        </div>
+    </div>
+
+    <div class="exercise-card">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400" class="exercise-img" alt="Sumo Squats">
+        <div class="exercise-info">
+            <h3>4. Sumo Squats</h3>
+            <div class="stats-badge">3 Sets x 15 Reps</div>
+        </div>
+    </div>
+
+    <div class="exercise-card">
+        <img src="https://images.unsplash.com/photo-1591948971350-383b9f81d50c?auto=format&fit=crop&q=80&w=400" class="exercise-img" alt="Glute Bridge">
+        <div class="exercise-info">
+            <h3>5. Glute Bridges</h3>
+            <div class="stats-badge">3 Sets x 20 Reps</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="session-footer">
+    <button class="done-btn" onclick="submitWorkout()">✅ Done for Today</button>
+</div>
+
+<script>
+    function submitWorkout() {
+        const session = document.getElementById('workoutSession');
+
+        const payload = {
+            type: session.getAttribute('data-type'),
+            duration: session.getAttribute('data-duration'),
+            kcal: session.getAttribute('data-kcal')
+        };
+
+        fetch('/api/save-workout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                alert("Great job! Wednesday workout saved. 🔥");
+                window.location.href = 'dashboard.html';
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Could not connect to server.");
+        });
+    }
+</script>
+
+</body>
+</html>

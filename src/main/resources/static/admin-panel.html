@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Fitness Guider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: white; padding: 30px; }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        h1 { color: #10b981; }
+        .logout-btn { background: #ef4444; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; }
+
+        .user-table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #334155; color: #10b981; text-transform: uppercase; font-size: 12px; }
+
+        .btn { padding: 8px 15px; border-radius: 6px; cursor: pointer; border: none; font-weight: 600; font-size: 12px; transition: 0.3s; margin-right: 5px; }
+        .view-btn { background: #3b82f6; color: white; }
+        .delete-btn { background: #ef4444; color: white; }
+        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1001; }
+        .modal-content { background: #1e293b; width: 80%; max-width: 800px; margin: 50px auto; padding: 30px; border-radius: 20px; max-height: 80vh; overflow-y: auto; }
+        .close-modal { float: right; cursor: pointer; color: #ef4444; font-size: 24px; }
+        .data-section { margin-top: 20px; }
+        .data-section h3 { border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 15px; color: #10b981; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Admin Dashboard</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
+</div>
+
+<table class="user-table">
+    <thead>
+    <tr>
+        <th>User Name</th>
+        <th>Email</th>
+        <th>Current Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="user-list">
+    </tbody>
+</table>
+
+<div id="dataModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 id="modalUserName">User Details</h2>
+        <div id="userDetailsContent"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', loadUsers);
+
+    function loadUsers() {
+        fetch('/api/admin/all-progress')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('user-list');
+                tbody.innerHTML = '';
+                data.forEach(user => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td>Diet: ${user.diet} | Workout: ${user.workout}</td>
+                            <td>
+                                <button class="btn view-btn" onclick="viewUserDetails('${user.email}', '${user.name}')">View Data</button>
+                                <button class="btn delete-btn" onclick="deleteUser('${user.email}')">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+    }
+
+    function viewUserDetails(email, name) {
+        document.getElementById('modalUserName').innerText = name + "'s Progress Report";
+        fetch('/api/admin/user-full-data?email=' + email)
+            .then(res => res.json())
+            .then(data => {
+                let html = '<div class="data-section"><h3>Workout History</h3>';
+                if(data.workouts.length === 0) html += '<p>No workouts logged.</p>';
+                data.workouts.forEach(w => {
+                    html += `<p>• ${w.workout_day}: ${w.workout_type} (${w.duration_min} min, ${w.kcal_burned} kcal)</p>`;
+                });
+
+                html += '</div><div class="data-section"><h3>Diet Logs</h3>';
+                if(data.diets.length === 0) html += '<p>No diet logs found.</p>';
+                data.diets.forEach(d => {
+                    html += `<p>• ${d.day_name}: ${d.plan_type} - ${d.calories} kcal (${d.status})</p>`;
+                });
+                html += '</div>';
+
+                document.getElementById('userDetailsContent').innerHTML = html;
+                document.getElementById('dataModal').style.display = 'block';
+            });
+    }
+
+    function deleteUser(email) {
+        if(confirm("Are you sure you want to delete this user and all their data?")) {
+            fetch('/api/admin/delete-user?email=' + email, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    loadUsers();
+                });
+        }
+    }
+
+    function closeModal() { document.getElementById('dataModal').style.display = 'none'; }
+</script>
+
+</body>
+</html>

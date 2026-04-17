@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Diet Plan | Fitness Guider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: white; min-height: 100vh; overflow-x: hidden; }
+
+        nav { background: #1e293b; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #3b82f6; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: 700; font-size: 24px; color: #3b82f6; letter-spacing: 1px; }
+        .back-btn { color: white; text-decoration: none; font-size: 14px; background: rgba(59, 130, 246, 0.2); padding: 8px 20px; border-radius: 8px; border: 1px solid #3b82f6; transition: 0.3s; }
+        .back-btn:hover { background: #3b82f6; }
+
+        .hero-section { text-align: center; padding: 60px 20px; background: linear-gradient(to bottom, #1e293b, #0f172a); }
+        .hero-section h1 { font-size: 3rem; margin-bottom: 15px; background: linear-gradient(to right, #3b82f6, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-section p { color: #94a3b8; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        .diet-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 40px 5%; max-width: 1300px; margin: 0 auto; }
+
+        .diet-card { background: #1e293b; border-radius: 24px; overflow: hidden; border: 1px solid #334155; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; display: flex; flex-direction: column; }
+        .diet-card:hover { transform: translateY(-12px); border-color: #3b82f6; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+
+        .card-image { width: 100%; height: 220px; object-fit: cover; border-bottom: 4px solid #3b82f6; }
+
+        .card-content { padding: 30px; flex-grow: 1; }
+        .card-content h2 { font-size: 24px; margin-bottom: 15px; color: #fff; }
+        .card-content p { color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+
+        .feature-list { list-style: none; margin-bottom: 25px; }
+        .feature-list li { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #cbd5e1; font-size: 14px; }
+        .feature-list li::before { content: '✓'; color: #3b82f6; font-weight: bold; }
+
+        .select-btn { display: block; width: 100%; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: 0.3s; margin-top: auto; }
+
+        /* Color Variations */
+        .gain { border-bottom: 4px solid #10b981; }
+        .gain-btn { background: #10b981; color: white; }
+        .gain-btn:hover { background: #059669; }
+
+        .loss { border-bottom: 4px solid #ef4444; }
+        .loss-btn { background: #ef4444; color: white; }
+        .loss-btn:hover { background: #dc2626; }
+
+        .fit { border-bottom: 4px solid #3b82f6; }
+        .fit-btn { background: #3b82f6; color: white; }
+        .fit-btn:hover { background: #2563eb; }
+
+        footer { text-align: center; padding: 40px; color: #64748b; font-size: 14px; border-top: 1px solid #1e293b; margin-top: 40px; }
+
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 2rem; }
+            .diet-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">FITNESS GUIDER</div>
+    <a href="dashboard.html" class="back-btn">Back to Dashboard</a>
+</nav>
+
+<header class="hero-section">
+    <h1>Choose Your Goal</h1>
+    <p>Personalized nutrition plans designed to help you transform your body and reach your target fitness level.</p>
+</header>
+
+<main class="diet-container">
+
+    <div class="diet-card">
+        <img src="https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=600" alt="Weight Gain" class="card-image gain">
+        <div class="card-content">
+            <h2>Muscle & Weight Gain</h2>
+            <p>High-calorie, protein-rich diet focused on building lean muscle mass and healthy weight increase.</p>
+            <ul class="feature-list">
+                <li>Surplus Calorie Tracking</li>
+                <li>High Protein Intake (1.8g/kg)</li>
+                <li>Complex Carbohydrates</li>
+                <li>Healthy Fat Sources</li>
+            </ul>
+            <a href="weight-gain.html" class="select-btn gain-btn">Start Gaining</a>
+        </div>
+    </div>
+
+    <div class="diet-card">
+        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600" alt="Weight Loss" class="card-image loss">
+        <div class="card-content">
+            <h2>Fat Loss & Shred</h2>
+            <p>Strategic calorie deficit plans to help you lose body fat while maintaining muscle tone and energy.</p>
+            <ul class="feature-list">
+                <li>Calorie Deficit Calculation</li>
+                <li>Low Carb / Keto Options</li>
+                <li>Fiber-Rich Whole Foods</li>
+                <li>Metabolism Boosters</li>
+            </ul>
+            <a href="weight-loss.html" class="select-btn loss-btn">Start Shredding</a>
+        </div>
+    </div>
+
+    <div class="diet-card">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600" alt="Stay Fit" class="card-image fit">
+        <div class="card-content">
+            <h2>Healthy & Stay Fit</h2>
+            <p>Balanced nutrition for maintaining current weight, improving immunity, and long-term wellness.</p>
+            <ul class="feature-list">
+                <li>Balanced Macronutrients</li>
+                <li>Anti-Inflammatory Foods</li>
+                <li>Vitamin & Mineral Focus</li>
+                <li>Sustainable Lifestyle</li>
+            </ul>
+            <a href="weight-fit.html" class="select-btn fit-btn">Maintain Fitness</a>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    &copy; 2026 Fitness Guider AI. All nutrition plans are generated based on standard health guidelines.
+</footer>
+
+</body>
+</html>

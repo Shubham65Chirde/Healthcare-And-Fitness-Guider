@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Weight Gain Diet Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: white; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        nav { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .back-dash { background: #3b82f6; color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; transition: 0.3s; }
+        .back-dash:hover { background: #2563eb; }
+        header { text-align: center; padding: 20px 0 40px; }
+        h1 { color: #10b981; font-size: 2.5rem; margin-bottom: 10px; }
+        .diet-table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 15px; overflow: hidden; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        th, td { padding: 20px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #10b981; color: white; text-transform: uppercase; font-size: 13px; }
+        tr:hover { background: #2d3a4f; transition: 0.3s; }
+        .done-btn { background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; width: 100%; }
+        .done-btn:hover { background: #059669; transform: scale(1.02); }
+        .done-btn.completed { background: #64748b; cursor: not-allowed; opacity: 0.7; }
+        @media (max-width: 900px) {
+            .diet-table, thead, tbody, th, td, tr { display: block; }
+            th { display: none; }
+            tr { margin-bottom: 20px; border: 1px solid #334155; border-radius: 10px; }
+            td { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
+            td::before { content: attr(data-label); font-weight: bold; color: #10b981; margin-right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav>
+        <a href="dashboard.html" class="back-dash">Back to Dashboard</a>
+    </nav>
+
+    <header>
+        <h1>Mass Gainer Diet Plan</h1>
+        <p>High calorie meals for maximum muscle growth</p>
+    </header>
+
+    <table class="diet-table">
+        <thead>
+        <tr>
+            <th>Day</th>
+            <th>Breakfast</th>
+            <th>Snack</th>
+            <th>Lunch</th>
+            <th>Evening</th>
+            <th>Dinner</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="diet-body">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const dietData = [
+        { day: "Monday", bf: "Oatmeal with Peanut Butter & Banana", snack: "Handful of Almonds & Walnuts", lunch: "Chicken Breast, Brown Rice & Broccoli", eve: "Fruit Smoothie with Protein Powder", dinner: "Paneer Tikka with 3 Butter Rotis", kcal: 3200 },
+        { day: "Tuesday", bf: "4 Egg Omelet with Avocado Toast", snack: "Greek Yogurt with Honey", lunch: "Beef Stew with Mashed Potatoes", eve: "Peanut Butter Sandwich", dinner: "Salmon Fillet with Quinoa", kcal: 3100 },
+        { day: "Wednesday", bf: "Pancakes with Maple Syrup & Berries", snack: "Cottage Cheese with Pineapple", lunch: "Pasta with Meatballs & Cheese", eve: "Hard Boiled Eggs (3)", dinner: "Grilled Chicken Salad with Chickpeas", kcal: 3300 },
+        { day: "Thursday", bf: "Banana & Nut Butter Protein Shake", snack: "Trail Mix (Dried Fruits & Nuts)", lunch: "Turkey Sandwich with Extra Cheese", eve: "Roasted Makhana", dinner: "Lentils (Dal) with Rice & Ghee", kcal: 3050 },
+        { day: "Friday", bf: "Scrambled Eggs on Sourdough", snack: "Apple with Almond Butter", lunch: "Tuna Salad Wrap with Hummus", eve: "Protein Bar", dinner: "Steak with Sweet Potato & Veggies", kcal: 3150 },
+        { day: "Saturday", bf: "Granola with Whole Milk & Seeds", snack: "Protein Cookies", lunch: "Chicken Biryani with Raita", eve: "Glass of Whole Milk & Dates", dinner: "Fish Curry with Brown Rice", kcal: 3400 },
+        { day: "Sunday", bf: "Big Breakfast (Eggs, Sausage, Beans)", snack: "Smoothie Bowl", lunch: "Paneer Butter Masala & Garlic Naan", eve: "Dark Chocolate & Pecans", dinner: "Vegetable Pulao with Fried Egg", kcal: 3000 }
+    ];
+
+    const tableBody = document.getElementById('diet-body');
+
+    dietData.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td data-label="Day"><strong>${item.day}</strong></td>
+            <td data-label="Breakfast">${item.bf}</td>
+            <td data-label="Snack">${item.snack}</td>
+            <td data-label="Lunch">${item.lunch}</td>
+            <td data-label="Evening">${item.eve}</td>
+            <td data-label="Dinner">${item.dinner}</td>
+            <td data-label="Action">
+                <button class="done-btn" onclick="saveMealProgress(this, '${item.day}', ${item.kcal})">Done</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    function saveMealProgress(btn, day, kcal) {
+        const planType = "Weight Gain";
+
+        const payload = {
+            plan_type: planType,
+            day: day,
+            calories: kcal,
+            status: "Completed"
+        };
+
+        fetch('/api/save-diet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === "success") {
+                alert("Data Stored Successfully!");
+                window.location.href = "custom-diet.html";
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(err => {
+            alert("Redirecting to Diet Menu...");
+            window.location.href = "custom-diet.html";
+        });
+    }
+</script>
+
+</body>
+</html>

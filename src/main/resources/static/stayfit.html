@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Focus Workouts | Fitness Guider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: white; scroll-behavior: smooth; }
+
+        nav { background: #1e293b; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: 800; font-size: 24px; color: #ff4d4d; text-decoration: none; letter-spacing: 1px; }
+        .back-btn { background: #3b82f6; color: white; text-decoration: none; padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; transition: 0.3s; }
+        .back-btn:hover { background: #2563eb; transform: scale(1.05); }
+
+        .hero { height: 60vh; background: linear-gradient(to right, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.2)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; padding: 0 8%; }
+        .hero h1 { font-size: 4rem; color: #ff4d4d; line-height: 1.1; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; color: #cbd5e1; max-width: 600px; }
+
+        .body-nav { background: #1e293b; padding: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; position: sticky; top: 72px; z-index: 999; border-bottom: 1px solid #334155; }
+        .body-nav a { color: #94a3b8; text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 18px; border-radius: 20px; border: 1px solid #334155; transition: 0.3s; }
+        .body-nav a:hover { border-color: #ff4d4d; color: #ff4d4d; }
+
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+
+        .section { margin-bottom: 80px; scroll-margin-top: 150px; }
+        .section-header { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; }
+        .section-header h2 { font-size: 2.5rem; color: #f8fafc; }
+        .section-header .line { flex-grow: 1; height: 2px; background: linear-gradient(to right, #ff4d4d, transparent); }
+
+        .workout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .workout-card { background: #1e293b; border-radius: 20px; overflow: hidden; border: 1px solid #334155; transition: 0.4s; }
+        .workout-card:hover { transform: translateY(-10px); border-color: #ff4d4d; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .workout-img { width: 100%; height: 200px; object-fit: cover; background: #0f172a; }
+        .workout-info { padding: 25px; }
+        .workout-info h3 { font-size: 1.4rem; margin-bottom: 10px; color: #ff4d4d; }
+        .workout-info p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px; }
+        .tags { display: flex; gap: 10px; }
+        .tag { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; padding: 4px 12px; border-radius: 5px; font-size: 12px; font-weight: 600; }
+
+        footer { text-align: center; padding: 60px; background: #1e293b; margin-top: 100px; color: #94a3b8; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .section-header h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="dashboard.html" class="logo">STAYFIT</a>
+    <a href="dashboard.html" class="back-btn">Dashboard</a>
+</nav>
+
+<header class="hero">
+    <h1>Targeted<br>Muscle Growth</h1>
+    <p>Select a body part and follow our scientifically backed workout routines to build strength and definition.</p>
+</header>
+
+<div class="body-nav">
+    <a href="#chest">Chest</a>
+    <a href="#back">Back</a>
+    <a href="#legs">Legs</a>
+    <a href="#shoulders">Shoulders</a>
+    <a href="#arms">Arms</a>
+    <a href="#core">Core</a>
+</div>
+
+<div class="container">
+
+    <section id="chest" class="section">
+        <div class="section-header">
+            <h2>Chest (Pectorals)</h2>
+            <div class="line"></div>
+        </div>
+        <div class="workout-grid">
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Strength</div>
+                    <h3>Bench Press</h3>
+                    <p>The king of chest exercises. Targets the middle pectorals, triceps, and front deltoids.</p>
+                    <div class="tags"><span>4 Sets</span> <span>8-10 Reps</span></div>
+                </div>
+            </div>
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Definition</div>
+                    <h3>Incline Dumbbell Flyes</h3>
+                    <p>Focuses on the upper chest and provides a deep stretch to help with muscle width.</p>
+                    <div class="tags"><span>3 Sets</span> <span>12-15 Reps</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="back" class="section">
+        <div class="section-header">
+            <h2>Back (Lats & Rhomboids)</h2>
+            <div class="line"></div>
+        </div>
+        <div class="workout-grid">
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Mass</div>
+                    <h3>Deadlifts</h3>
+                    <p>Works the entire posterior chain including the lower back, traps, and hamstrings.</p>
+                    <div class="tags"><span>5 Sets</span> <span>5 Reps</span></div>
+                </div>
+            </div>
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Width</div>
+                    <h3>Pull-Ups</h3>
+                    <p>Best for achieving the V-taper look. Targets the Latissimus Dorsi muscle.</p>
+                    <div class="tags"><span>3 Sets</span> <span>To Failure</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="legs" class="section">
+        <div class="section-header">
+            <h2>Legs (Quads & Glutes)</h2>
+            <div class="line"></div>
+        </div>
+        <div class="workout-grid">
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Power</div>
+                    <h3>Barbell Squats</h3>
+                    <p>Essential for leg power. Engages the quadriceps, glutes, and core stability.</p>
+                    <div class="tags"><span>4 Sets</span> <span>6-8 Reps</span></div>
+                </div>
+            </div>
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Endurance</div>
+                    <h3>Walking Lunges</h3>
+                    <p>Improves balance and targets the glutes and hamstrings unilaterally.</p>
+                    <div class="tags"><span>3 Sets</span> <span>20 Steps</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="shoulders" class="section">
+        <div class="section-header">
+            <h2>Shoulders (Deltoids)</h2>
+            <div class="line"></div>
+        </div>
+        <div class="workout-grid">
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Size</div>
+                    <h3>Overhead Press</h3>
+                    <p>Develops shoulder thickness and upper body pressing power.</p>
+                    <div class="tags"><span>4 Sets</span> <span>8 Reps</span></div>
+                </div>
+            </div>
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Width</div>
+                    <h3>Lateral Raises</h3>
+                    <p>The best isolation movement for the side deltoids to make shoulders look broader.</p>
+                    <div class="tags"><span>4 Sets</span> <span>15 Reps</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="arms" class="section">
+        <div class="section-header">
+            <h2>Arms (Biceps & Triceps)</h2>
+            <div class="line"></div>
+        </div>
+        <div class="workout-grid">
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Bicep</div>
+                    <h3>Barbell Curls</h3>
+                    <p>Heavy bicep isolation to build the peak and overall arm thickness.</p>
+                    <div class="tags"><span>3 Sets</span> <span>10-12 Reps</span></div>
+                </div>
+            </div>
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Tricep</div>
+                    <h3>Skull Crushers</h3>
+                    <p>Targets the long head of the triceps, providing most of the arm's size.</p>
+                    <div class="tags"><span>3 Sets</span> <span>12 Reps</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="core" class="section">
+        <div class="section-header">
+            <h2>Core (Abs)</h2>
+            <div class="line"></div>
+        </div>
+        <div class="workout-grid">
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Stability</div>
+                    <h3>Plank</h3>
+                    <p>The ultimate isometric exercise for core strength and posture.</p>
+                    <div class="tags"><span>3 Sets</span> <span>60 Seconds</span></div>
+                </div>
+            </div>
+            <div class="workout-card">
+                <div class="workout-info">
+                    <div class="tag">Abs</div>
+                    <h3>Hanging Leg Raises</h3>
+                    <p>Targets the lower abdominals and hip flexors effectively.</p>
+                    <div class="tags"><span>3 Sets</span> <span>15 Reps</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 StayFit - Build Your Best Version</p>
+</footer>
+
+</body>
+</html>

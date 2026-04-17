@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Fitness Guider</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+    }
+    body{
+    background:#0f172a;
+    color:white;
+    min-height:100vh;
+    }
+    nav{
+    background:#1e293b;
+    padding:15px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    }
+    .nav-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    }
+    .logo{
+    font-weight:700;
+    font-size:22px;
+    color:#ff4d4d;
+    }
+    .progress-btn{
+    background:rgba(255,77,77,0.1);
+    color:#ff4d4d;
+    text-decoration:none;
+    padding:6px 15px;
+    border-radius:6px;
+    font-size:13px;
+    font-weight:500;
+    border:1px solid rgba(255,77,77,0.3);
+    transition:0.3s;
+    }
+    .progress-btn:hover{
+    background:#ff4d4d;
+    color:white;
+    }
+    .nav-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    }
+    .logout-btn{
+    background:#ff4d4d;
+    color:white;
+    text-decoration:none;
+    padding:8px 18px;
+    border-radius:8px;
+    font-size:14px;
+    transition:0.3s;
+    }
+    .logout-btn:hover{background:#e60000;}
+    .container{
+    max-width:1200px;
+    margin:0 auto;
+    padding:40px 20px;
+    }
+    .hero-section{
+    background:linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    padding:40px;
+    border-radius:20px;
+    border:1px solid #334155;
+    margin-bottom:40px;
+    }
+    .section-title{
+    margin-bottom:25px;
+    font-size:22px;
+    border-left:4px solid #ff4d4d;
+    padding-left:15px;
+    }
+    .dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:25px;
+    }
+    .card-link{text-decoration:none; color:inherit;}
+    .card{
+    background:#1e293b;
+    padding:30px;
+    border-radius:15px;
+    transition:0.4s;
+    border:1px solid #334155;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    height:100%;
+    }
+    .card:hover{
+    transform:scale(1.03);
+    border-color:#ff4d4d;
+    background:#273549;
+    }
+    .icon-box{
+    width:60px;
+    height:60px;
+    background:rgba(255,77,77,0.1);
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    }
+    .card-info h3{font-size:18px; margin-bottom:5px;}
+    .card-info p{font-size:13px; color:#94a3b8;}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <div class="logo">FITNESS GUIDER</div>
+    <a href="progress.html" class="progress-btn">My Progress</a>
+  </div>
+  <div class="nav-right">
+    <span id="userNameLabel">User 👋</span>
+    <a href="login.html" class="logout-btn">Logout</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="hero-section">
+    <h1 id="welcomeText">Hey User! 🎯</h1>
+    <p>Ready to level up your fitness journey?</p>
+  </div>
+
+  <h2 class="section-title">Your Modules</h2>
+
+  <div class="dashboard-grid">
+
+    <a href="bmi-calculator.html" class="card-link">
+      <div class="card">
+        <div class="icon-box">⚖️</div>
+        <div class="card-info">
+          <h3>BMI Calculator</h3>
+          <p>Track your body mass index and health status.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="custom-workout.html" class="card-link">
+      <div class="card">
+        <div class="icon-box">🏋️‍♂️</div>
+        <div class="card-info">
+          <h3>Customized Workout</h3>
+          <p>Tailored plan based on your specific fitness goal.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="custom-diet.html" class="card-link">
+      <div class="card">
+        <div class="icon-box">🥗</div>
+        <div class="card-info">
+          <h3>Customized Diet</h3>
+          <p>Nutrition plans designed for your body type.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="stayfit.html" class="card-link">
+      <div class="card">
+        <div class="icon-box">🏃‍♂️</div>
+        <div class="card-info">
+          <h3>Stay Fit Workouts</h3>
+          <p>Daily routines to keep you active and healthy.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="health-tips.html" class="card-link">
+      <div class="card">
+        <div class="icon-box">💡</div>
+        <div class="card-info">
+          <h3>Health Tips</h3>
+          <p>Daily expert advice for a better lifestyle.</p>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<script>
+  window.onload = function() {
+     fetch('/api/user-name')
+     .then(r=>r.text())
+     .then(name=>{
+     if(name!=="Guest")
+     {
+
+      document.getElementById('userNameLabel').innerText = name + " 👤";
+      document.getElementById('welcomeText').innerText = "Hey " + name + "! 🎯";
+      }
+      });
+  };
+</script>
+
+</body>
+</html>
