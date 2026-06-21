@@ -1,10 +1,10 @@
-# Stage 1: Build using Sapmachine Java 25
-FROM maven:3.9.9-sapmachine-25 AS build
+# Stage 1: Build using official stable Maven image
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Stage 2: Explicitly force Sapmachine Java 25 as the ONLY runtime environment
+# Stage 2: Hard-lock runtime to exact Sapmachine Java 25
 FROM sapmachine:25-jre-headless-ubuntu
 WORKDIR /app
 
