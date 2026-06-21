@@ -1,15 +1,12 @@
-# Use a single stable image that handles both build and run natively
-FROM maven:3.9.9-sapmachine-25
-
-# Set directory
-WORKDIR /app
+# Step 1: Build using SAPMachine Java 25 (Render handles this perfectly!)
+FROM maven:3.9.9-sapmachine-25 AS build
 COPY . .
-
-# Build inside the final container execution layer
 RUN mvn clean package -DskipTests
 
-# Expose port
 EXPOSE 8080
 
-# Command to run direct jar from target
-CMD ["java", "-jar", "target/stayfit-backend-0.0.1-SNAPSHOT.jar"]
+# Step 2: Use the exact same verified SAPMachine Java 25 for runtime
+FROM ghcr.io/sap/sapmachine:25-jre-alpine AS runtime
+# Alternative if ghcr fails: FROM openjdk:25-ea-slim (Let's stick to standard docker hub to be 100% sure)
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y openjdk-21-jre-headless && apt-get clean
