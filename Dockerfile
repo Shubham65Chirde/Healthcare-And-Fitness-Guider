@@ -1,10 +1,10 @@
-#step 1 : Build the application using Maven
-From maven:3-openjdk-25 AS build
+# Step 1: Use the exact multi-architecture stable Maven + JDK 25 verified repository
+FROM maven:3.9.9-sapmachine-25 AS build
 COPY . .
 RUN mvn clean package -DskipTests
 
-#step 2 : Run the application using OpenJdk
-From openjdk:25-slim
+# Step 2: Use stable runtime execution environment
+FROM ghcr.io/graalvm/jdk:ol9-java25
 COPY --from=build /target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
