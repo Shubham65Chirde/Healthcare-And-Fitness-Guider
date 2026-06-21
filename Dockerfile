@@ -1,12 +1,15 @@
-# Step 1: Build using SAPMachine Java 25 (Render handles this perfectly!)
+# Stage 1: Build using Sapmachine Java 25
 FROM maven:3.9.9-sapmachine-25 AS build
+WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-EXPOSE 8080
+# Stage 2: Explicitly force Sapmachine Java 25 as the ONLY runtime environment
+FROM sapmachine:25-jre-headless-ubuntu
+WORKDIR /app
 
-# Step 2: Use the exact same verified SAPMachine Java 25 for runtime
-FROM ghcr.io/sap/sapmachine:25-jre-alpine AS runtime
-# Alternative if ghcr fails: FROM openjdk:25-ea-slim (Let's stick to standard docker hub to be 100% sure)
-FROM ubuntu:24.04
-RUN apt-get update && apt-get install -y openjdk-21-jre-headless && apt-get clean
+# Copy the built jar from Stage 1 cleanly
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
