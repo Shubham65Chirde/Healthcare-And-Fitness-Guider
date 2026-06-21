@@ -1,7 +1,7 @@
 #step 1 : Build the application using Maven
 From maven:3.8.5-openjdk-17 AS build
 COPY . .
-RUN chmod +x mvnw && ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 #step 2 : Run the application using OpenJdk
 From eclipse-temurin:17-jdk-alpine
