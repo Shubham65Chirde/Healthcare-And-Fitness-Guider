@@ -45,13 +45,46 @@
     <div class="exercise-card"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400" class="exercise-img"><div><h3>5. Skull Crushers</h3><div class="stats-badge">3 Sets x 12 Reps</div></div></div>
     <div class="exercise-card"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400" class="exercise-img"><div><h3>6. Tricep Extensions</h3><div class="stats-badge">3 Sets x 15 Reps</div></div></div>
 </div>
-<div class="session-footer"><button class="done-btn" onclick="submitWorkout()">✅ Complete Monday</button></div>
+<div class="session-footer">
+
+    <form action="/save-workout" method="POST">
+
+        <input type="hidden" name="workoutType" value="Mass Gain">
+        <input type="hidden" name="duration" value="60">
+        <input type="hidden" name="kcalBurned" value="500">
+        <input type="hidden" name="workoutDay" value="Monday">
+
+        <button type="submit" class="done-btn">
+            ✅ Complete Monday
+        </button>
+
+    </form>
+
+</div>
 <script>
     function submitWorkout() {
         const session = document.getElementById('workoutSession');
-        const payload = { type: session.getAttribute('data-type'), duration: session.getAttribute('data-duration'), kcal: session.getAttribute('data-kcal'), day: "Monday" };
-        fetch('/api/save-workout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-        .then(res => res.json()).then(data => { if(data.status === 'success') { alert("Monday Mass Gain Saved!"); window.location.href = 'dashboard.html'; } })
+        const payload = {
+            type: session.getAttribute('data-type'),
+            duration: session.getAttribute('data-duration'),
+            kcal: session.getAttribute('data-kcal'),
+            day: "Monday"
+        };
+
+        fetch('/api/save-workout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                alert("Monday Mass Gain Saved!");
+                window.location.href = 'dashboard.html';
+            }
+        })
         .catch(err => alert("Session logged locally!"));
     }
 </script>

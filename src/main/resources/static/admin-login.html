@@ -58,14 +58,19 @@
         const password = document.getElementById('password').value;
         const errorMsg = document.getElementById('error-msg');
 
-        fetch('/api/admin/login', {
+        fetch('https://stayfit-backend-7srv.onrender.com/api/admin/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: username, password: password })
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
         })
         .then(res => res.json())
         .then(data => {
-            if(data.status === "success") {
+            if (data.status === "success") {
                 window.location.href = "admin-panel.html";
             } else {
                 errorMsg.style.display = "block";
@@ -73,11 +78,11 @@
             }
         })
         .catch(err => {
+            console.error(err);
             errorMsg.style.display = "block";
             errorMsg.innerText = "Connection error with server";
         });
     });
 </script>
-
 </body>
 </html>

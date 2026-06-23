@@ -187,28 +187,31 @@
 
         const payload = {
             type: session.getAttribute('data-type'),
-            duration: session.getAttribute('data-duration'),
-            kcal: session.getAttribute('data-kcal'),
+            duration: parseInt(session.getAttribute('data-duration')),
+            kcal: parseInt(session.getAttribute('data-kcal')),
             day: "Friday"
         };
 
         fetch('/api/save-workout', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
             body: JSON.stringify(payload)
         })
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
-            if(data.status === 'success') {
-                alert("Posture check! Friday workout saved successfully. 🌿");
-                window.location.href = 'dashboard.html';
+            if (data.status === "success") {
+                alert("✅ Friday Workout Saved Successfully!");
+                window.location.href = "/dashboard.html";
             } else {
-                alert("Error: " + data.message);
+                alert("❌ " + data.message);
             }
         })
-        .catch(err => {
-            console.error(err);
-            alert("Could not connect to server.");
+        .catch(error => {
+            console.error(error);
+            alert("❌ Failed to save workout.");
         });
     }
 </script>

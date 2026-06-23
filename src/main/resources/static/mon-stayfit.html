@@ -220,34 +220,48 @@
 </div>
 
 <script>
-    function submitWorkout() {
-        const session = document.getElementById('workoutSession');
+function submitWorkout() {
 
-        const payload = {
-            type: session.getAttribute('data-type'),
-            duration: session.getAttribute('data-duration'),
-            kcal: session.getAttribute('data-kcal')
-        };
+    const session = document.getElementById('workoutSession');
 
-        fetch('/api/save-workout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === 'success') {
-                alert("Great job! Workout progress saved. 🔥");
-                window.location.href = 'dashboard.html';
-            } else {
-                alert("Error: " + data.message);
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Could not connect to server.");
-        });
-    }
+    const payload = {
+        day: "Monday",
+        type: session.dataset.type,
+        duration: parseInt(session.dataset.duration),
+        kcal: parseInt(session.dataset.kcal)
+    };
+
+    fetch('http://localhost:8080/api/workout/save', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Server Error");
+        }
+
+        return response.json();
+    })
+    .then(data => {
+
+        alert("🎉 Monday Stay Fit Workout Saved Successfully!");
+
+        localStorage.setItem("mondayCompleted", "true");
+
+        window.location.href = "dashboard.html";
+    })
+    .catch(error => {
+
+        console.error(error);
+
+        alert("❌ Unable to save workout. Please check backend connection.");
+
+    });
+}
 </script>
 
 </body>

@@ -49,10 +49,35 @@
 <script>
     function submitWorkout() {
         const session = document.getElementById('workoutSession');
-        const payload = { type: session.getAttribute('data-type'), duration: session.getAttribute('data-duration'), kcal: session.getAttribute('data-kcal'), day: "Friday" };
-        fetch('/api/save-workout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-        .then(() => { alert("Friday Session Logged!"); window.location.href = 'dashboard.html'; })
-        .catch(() => { window.location.href = 'dashboard.html'; });
+
+        const payload = {
+            type: session.getAttribute('data-type'),
+            duration: parseInt(session.getAttribute('data-duration')),
+            kcal: parseInt(session.getAttribute('data-kcal')),
+            day: "Friday"
+        };
+
+        fetch('/api/save-workout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert("✅ Friday Session Logged Successfully!");
+                window.location.href = "/dashboard.html";
+            } else {
+                alert("❌ " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            alert("❌ Failed to save workout.");
+        });
     }
 </script>
 </body>

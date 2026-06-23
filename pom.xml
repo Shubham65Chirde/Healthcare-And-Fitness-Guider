@@ -18,7 +18,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <name>Capstone-Fitness</name>
-    <description>Capstone Fitness Project</description>
+    <description>Online Health Care and Fitness Guider</description>
 
     <properties>
         <java.version>21</java.version>
@@ -36,6 +36,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- JDBC (JdbcTemplate Support) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <!-- Thymeleaf (for templates folder) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
         <!-- MySQL Driver -->
