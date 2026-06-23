@@ -225,11 +225,123 @@
             border-top: 1px solid #1e293b;
         }
 
-        @media (max-width: 900px) {
-            .info { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 45px; }
-            header nav { display: none; }
-        }
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+
+img{
+    max-width:100%;
+    height:auto;
+}
+
+.info-img img{
+    width:100%;
+    display:block;
+}
+
+@media (max-width: 900px){
+
+    header{
+        padding:15px 5%;
+        flex-direction:column;
+        gap:12px;
+    }
+
+    header nav{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:10px;
+    }
+
+    header nav a{
+        margin-left:0;
+        font-size:13px;
+    }
+
+    .hero{
+        padding:140px 5% 80px;
+        min-height:100vh;
+        height:auto;
+        justify-content:center;
+        text-align:center;
+    }
+
+    .hero-content{
+        max-width:100%;
+    }
+
+    .hero h1{
+        font-size:42px;
+        line-height:1.2;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .hero-btns{
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .info{
+        grid-template-columns:1fr;
+        padding:70px 5%;
+    }
+
+    .features{
+        padding:70px 5%;
+    }
+}
+
+@media (max-width: 600px){
+
+    .logo{
+        font-size:20px;
+        text-align:center;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .hero-btns{
+        flex-direction:column;
+        width:100%;
+    }
+
+    .btn-primary,
+    .btn-secondary{
+        width:100%;
+        text-align:center;
+    }
+
+    .info-text h2{
+        font-size:28px;
+    }
+
+    .features h2{
+        font-size:28px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        width:100%;
+    }
+
+    footer{
+        padding:25px 15px;
+        font-size:14px;
+    }
+}
     </style>
 </head>
 
