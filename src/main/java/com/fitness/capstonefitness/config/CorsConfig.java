@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://online-healthcare-and-fitnessguider.netlify.app")
+                        .allowedOrigins("https://healthcareandfitnessguider.vercel.app/")
                         .allowedMethods("*")
                         .allowedHeaders("*");
             }
